@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
@@ -13,20 +14,21 @@ export async function Footer() {
       <Container>
         <div className="grid gap-10 py-16 md:grid-cols-4">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-md bg-gold text-gold-foreground font-display text-lg font-bold">
-                B
-              </span>
-              <div className="flex flex-col leading-tight">
-                <span className="font-display text-base font-semibold">
-                  BCL Plastering
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Building Remodel
-                </span>
-              </div>
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground max-w-xs leading-relaxed">
+            <Link
+              href="/"
+              aria-label={`${site.name} home`}
+              className="inline-flex transition-opacity hover:opacity-100"
+            >
+              <Image
+                src="/logo/bcl-logo.png"
+                alt={site.name}
+                width={400}
+                height={400}
+                sizes="80px"
+                className="h-20 w-auto opacity-90"
+              />
+            </Link>
+            <p className="mt-5 text-sm text-muted-foreground max-w-xs leading-relaxed">
               Family-owned California craftsmanship. Premium stucco, plaster,
               and full home remodels across the Inland Empire — with two
               decades of project photos to prove it.

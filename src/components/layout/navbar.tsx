@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,18 +27,20 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
       <Container>
         <div className="flex h-16 items-center justify-between gap-6">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-gold text-gold-foreground font-display text-lg font-bold transition-transform group-hover:scale-105">
-              B
-            </span>
-            <span className="hidden sm:flex flex-col leading-tight">
-              <span className="font-display text-base font-semibold tracking-tight text-foreground">
-                BCL Plastering
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                Building Remodel
-              </span>
-            </span>
+          <Link
+            href="/"
+            aria-label={`${site.name} home`}
+            className="group inline-flex items-center transition-opacity hover:opacity-90"
+          >
+            <Image
+              src="/logo/bcl-logo.png"
+              alt={site.name}
+              width={400}
+              height={400}
+              priority
+              sizes="48px"
+              className="h-10 sm:h-12 w-auto"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">

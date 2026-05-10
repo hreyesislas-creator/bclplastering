@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { LoginForm } from "./login-form";
 import { Container } from "@/components/ui/container";
@@ -33,22 +34,25 @@ export default async function LoginPage({ searchParams }: PageProps) {
         <div className="mx-auto w-full max-w-md">
           <Link
             href="/"
-            className="inline-flex items-center gap-2.5 group"
+            aria-label={`${site.name} home`}
+            className="mx-auto flex w-fit items-center justify-center transition-opacity hover:opacity-90"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-gold text-gold-foreground font-display text-lg font-bold transition-transform group-hover:scale-105">
-              B
-            </span>
-            <div className="flex flex-col leading-tight">
-              <span className="font-display text-base font-semibold text-foreground">
-                {site.shortName}
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                Admin
-              </span>
-            </div>
+            <Image
+              src="/logo/bcl-logo.png"
+              alt={site.name}
+              width={400}
+              height={400}
+              priority
+              sizes="96px"
+              className="h-24 w-auto"
+            />
           </Link>
 
-          <div className="mt-8 rounded-2xl border border-border surface-elevated p-7 sm:p-9">
+          <p className="mt-3 text-center text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            Admin · Sign in
+          </p>
+
+          <div className="mt-7 rounded-2xl border border-border surface-elevated p-7 sm:p-9">
             <h1 className="h-display text-3xl sm:text-4xl font-semibold text-foreground">
               Sign in
             </h1>
