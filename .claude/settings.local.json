@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(npm --version)",
-      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --app --src-dir --eslint --import-alias \"@/*\" --use-npm --no-turbopack --yes)"
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --app --src-dir --eslint --import-alias \"@/*\" --use-npm --no-turbopack --yes)",
+      "Bash(npm install *)",
+      "Bash(mkdir -p \"\\(marketing\\)\")",
+      "Bash(mv services *)",
+      "Bash(rm page.tsx)",
+      "Read(//c/c/Users/hhrey/Documents/bclplastering/bclplastering/src/app/**)",
+      "Bash(npm run *)",
+      "Bash(rm -f file.svg globe.svg next.svg vercel.svg window.svg)",
+      "Read(//c/c/Users/hhrey/Documents/bclplastering/bclplastering/**)"
     ]
   }
 }

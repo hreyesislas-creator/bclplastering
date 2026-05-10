@@ -1,26 +1,282 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * BCL Plastering & Building Remodel — Design System
+ * Premium California remodeling. Charcoal + warm beige + muted gold.
+ */
+
+@theme {
+  /* Surfaces */
+  --color-background: oklch(0.16 0.005 60);          /* deep charcoal */
+  --color-foreground: oklch(0.97 0.012 80);          /* soft white */
+
+  --color-surface: oklch(0.20 0.006 60);             /* charcoal raised */
+  --color-surface-2: oklch(0.24 0.008 60);           /* card */
+  --color-surface-3: oklch(0.29 0.008 60);           /* hover */
+
+  --color-muted: oklch(0.30 0.008 60);
+  --color-muted-foreground: oklch(0.74 0.015 70);
+
+  --color-border: oklch(0.30 0.008 60);
+  --color-input: oklch(0.27 0.008 60);
+  --color-ring: oklch(0.74 0.10 78);
+
+  /* Brand */
+  --color-sand: oklch(0.86 0.04 75);                 /* warm beige */
+  --color-sand-foreground: oklch(0.20 0.008 60);
+  --color-bone: oklch(0.96 0.012 80);                /* soft white */
+  --color-stone: oklch(0.55 0.012 60);
+
+  --color-gold: oklch(0.78 0.11 78);                 /* muted gold */
+  --color-gold-foreground: oklch(0.16 0.006 60);
+  --color-gold-soft: oklch(0.86 0.07 80);
+  --color-gold-deep: oklch(0.62 0.10 70);
+
+  --color-primary: oklch(0.78 0.11 78);
+  --color-primary-foreground: oklch(0.14 0.006 60);
+
+  --color-secondary: oklch(0.86 0.04 75);
+  --color-secondary-foreground: oklch(0.18 0.005 60);
+
+  --color-accent: oklch(0.30 0.012 60);
+  --color-accent-foreground: oklch(0.96 0.012 80);
+
+  --color-destructive: oklch(0.62 0.20 25);
+  --color-destructive-foreground: oklch(0.98 0 0);
+
+  --color-card: oklch(0.20 0.006 60);
+  --color-card-foreground: oklch(0.97 0.012 80);
+
+  --color-popover: oklch(0.20 0.006 60);
+  --color-popover-foreground: oklch(0.97 0.012 80);
+
+  /* Brand source colors */
+  --color-brand-google: oklch(0.78 0.18 80);
+  --color-brand-yelp: oklch(0.62 0.22 25);
+  --color-brand-thumbtack: oklch(0.65 0.16 220);
+  --color-brand-whatsapp: oklch(0.74 0.18 150);
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Container */
+  --container-2xl: 1400px;
+
+  /* Premium shadow stack */
+  --shadow-soft:
+    0 1px 1px rgba(0, 0, 0, 0.18),
+    0 4px 12px rgba(0, 0, 0, 0.22),
+    0 18px 40px rgba(0, 0, 0, 0.18);
+  --shadow-elev:
+    0 1px 1px rgba(0, 0, 0, 0.20),
+    0 6px 18px rgba(0, 0, 0, 0.32),
+    0 28px 60px rgba(0, 0, 0, 0.40);
+  --shadow-glow: 0 0 0 1px oklch(0.78 0.11 78 / 0.20),
+    0 12px 60px oklch(0.78 0.11 78 / 0.18);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* Animations */
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.7s ease both;
+  --animate-marquee: marquee 36s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
+  --animate-float: float 8s ease-in-out infinite;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.04); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  border-color: var(--color-border);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv11";
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, oklch(0.30 0.04 75 / 0.18), transparent 60%),
+    radial-gradient(900px 500px at 0% 100%, oklch(0.78 0.11 78 / 0.05), transparent 60%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background-color: oklch(0.78 0.11 78 / 0.35);
+  color: var(--color-foreground);
+}
+
+@media (pointer: fine) {
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background: oklch(0.32 0.008 60);
+    border-radius: 999px;
+    border: 2px solid var(--color-background);
+  }
+  *::-webkit-scrollbar-thumb:hover { background: oklch(0.42 0.008 60); }
+}
+
+/* Stucco texture overlay */
+.stucco-texture {
+  position: relative;
+  isolation: isolate;
+}
+.stucco-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.45 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+  mix-blend-mode: overlay;
+  opacity: 0.18;
+  z-index: -1;
+}
+
+/* Subtle dot grid backdrop */
+.dot-grid {
+  background-image: radial-gradient(
+    oklch(0.97 0.012 80 / 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Faux-ruled section divider */
+.section-divider {
+  position: relative;
+}
+.section-divider::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 64px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, var(--color-gold), transparent);
+  opacity: 0.5;
+}
+
+/* Display heading */
+.h-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, oklch(0.92 0.07 82), oklch(0.66 0.10 70));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Premium card surface (warm gradient + inner highlight) */
+.surface-elevated {
+  background:
+    linear-gradient(180deg, oklch(0.24 0.008 60 / 0.55), oklch(0.20 0.006 60 / 0.85)),
+    var(--color-card);
+  box-shadow: var(--shadow-soft), var(--shadow-inset);
+  border: 1px solid oklch(0.32 0.008 60);
+}
+
+/* Gold halo ring on hover */
+.hover-halo {
+  transition: box-shadow 280ms var(--ease-out-expo),
+              border-color 280ms var(--ease-out-expo),
+              transform 280ms var(--ease-out-expo);
+}
+.hover-halo:hover {
+  box-shadow: var(--shadow-glow), var(--shadow-inset);
+  border-color: oklch(0.78 0.11 78 / 0.45);
+}
+
+/* Frosted glass nav / mobile bar */
+.glass {
+  background: oklch(0.16 0.005 60 / 0.7);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+/* Cinematic vignette for hero / showcase */
+.vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% 0%, transparent 50%, oklch(0.10 0 0 / 0.55) 100%);
+}
+
+/* Marquee row (used by trust bar) */
+.marquee {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

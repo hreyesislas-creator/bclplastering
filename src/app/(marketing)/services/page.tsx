@@ -1,0 +1,49 @@
+import type { Metadata } from "next";
+import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/sections/section-heading";
+import { ServiceCard } from "@/components/sections/service-card";
+import { CTASection } from "@/components/sections/cta-section";
+import { Reveal } from "@/components/sections/reveal";
+import { services } from "@/data/services";
+
+export const metadata: Metadata = {
+  title: "Services",
+  description:
+    "Stucco installation and repair, exterior and interior remodeling, drywall repair, and decorative finishes — done right across the Inland Empire.",
+  alternates: { canonical: "/services" },
+};
+
+export default function ServicesPage() {
+  return (
+    <>
+      <section className="pt-20 sm:pt-28 pb-12">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Services"
+              title={
+                <>
+                  Premium services,{" "}
+                  <span className="text-gold-gradient">end-to-end.</span>
+                </>
+              }
+              description="One crew. One project manager. From the initial walk-through and written estimate, to permits, inspections, and the final walk-through."
+            />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="pb-20 sm:pb-28">
+        <Container>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((s, i) => (
+              <ServiceCard key={s.slug} service={s} index={i} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <CTASection />
+    </>
+  );
+}
