@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { services } from "@/data/services";
 import { projects } from "@/data/projects";
+import { getPublicServices } from "@/lib/services";
 import { site } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const services = await getPublicServices();
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
   const now = new Date();
 

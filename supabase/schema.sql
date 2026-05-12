@@ -72,6 +72,10 @@ create table public.projects (
 -- See supabase/migrations/0001_media_manager.sql for the site_images
 -- table, RLS, storage bucket, and seeded media slots used by the
 -- dashboard's Website Images + Media Library pages.
+--
+-- See supabase/migrations/0003_editable_services.sql for the services
+-- table, RLS, the service-images bucket, and the seeded service slots
+-- that back the public Services pages.
 
 create table public.reviews (
   id uuid primary key default gen_random_uuid(),

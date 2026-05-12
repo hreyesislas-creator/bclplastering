@@ -1,7 +1,13 @@
 import type { Project, Review } from "@/types/db";
-import type { ServiceItem } from "@/data/services";
 import type { SiteSettings } from "@/lib/settings";
 import { site } from "@/lib/site";
+
+interface ServiceSchemaInput {
+  slug: string;
+  title: string;
+  description: string;
+  startingFrom?: string;
+}
 
 const ORG_TYPE = "GeneralContractor";
 
@@ -102,7 +108,7 @@ export function localBusinessSchema(opts: {
 }
 
 export function serviceSchema(opts: {
-  service: ServiceItem;
+  service: ServiceSchemaInput;
   settings: SiteSettings;
   baseUrl: string;
 }) {

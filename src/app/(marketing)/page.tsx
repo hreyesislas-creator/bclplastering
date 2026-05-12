@@ -15,20 +15,27 @@ import { CTASection } from "@/components/sections/cta-section";
 import { Reveal } from "@/components/sections/reveal";
 import { JsonLd } from "@/components/seo/json-ld";
 import { localBusinessSchema } from "@/lib/seo/jsonld";
-import { services } from "@/data/services";
 import { getPublicProjects, getPublicReviews } from "@/lib/public-data";
 import { getSiteSettings } from "@/lib/settings";
 import { getSiteImages } from "@/lib/site-images";
+import { getPublicServices } from "@/lib/services";
 import { env } from "@/lib/env";
 import { site } from "@/lib/site";
 
 export default async function HomePage() {
-  const [projects, reviews, settings, siteImages] = await Promise.all([
-    getPublicProjects(),
-    getPublicReviews(),
-    getSiteSettings(),
-    getSiteImages(),
-  ]);
+  const [projects, reviews, settings, siteImages, allServices] =
+    await Promise.all([
+      getPublicProjects(),
+      getPublicReviews(),
+      getSiteSettings(),
+      getSiteImages(),
+      getPublicServices(),
+    ]);
+  // Featured services first; if none flagged, just show the first six.
+  const featuredServices = allServices.filter((s) => s.featured);
+  const homepageServices = (
+    featuredServices.length > 0 ? featuredServices : allServices
+  ).slice(0, 6);
   const ld = localBusinessSchema({
     settings,
     reviews,
@@ -83,7 +90,7 @@ export default async function HomePage() {
           </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => (
+            {homepageServices.map((s, i) => (
               <ServiceCard key={s.slug} service={s} index={i} />
             ))}
           </div>

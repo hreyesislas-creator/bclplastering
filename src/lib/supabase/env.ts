@@ -16,6 +16,7 @@ export const supabaseStorageBuckets = {
   projectGallery: "project-gallery",
   beforeAfter: "before-after",
   siteImages: "site-images",
+  serviceImages: "service-images",
 } as const;
 
 export type SupabaseStorageBucket =

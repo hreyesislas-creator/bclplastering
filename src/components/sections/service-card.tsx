@@ -3,12 +3,20 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Check } from "lucide-react";
-import type { ServiceItem } from "@/data/services";
 import { ServiceIcon } from "./service-icon";
 import { cn } from "@/lib/utils";
 
+interface ServiceCardItem {
+  slug: string;
+  iconKey: string;
+  title: string;
+  short: string;
+  bullets: string[];
+  startingFrom?: string | null;
+}
+
 interface ServiceCardProps {
-  service: ServiceItem;
+  service: ServiceCardItem;
   className?: string;
   index?: number;
 }
@@ -69,7 +77,6 @@ export function ServiceCard({ service, className, index = 0 }: ServiceCardProps)
           <div className="mt-auto pt-7 flex items-center justify-between border-t border-border/60">
             {service.startingFrom ? (
               <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                from{" "}
                 <span className="font-medium text-foreground">
                   {service.startingFrom}
                 </span>

@@ -4,7 +4,9 @@ import { SectionHeading } from "@/components/sections/section-heading";
 import { ServiceCard } from "@/components/sections/service-card";
 import { CTASection } from "@/components/sections/cta-section";
 import { Reveal } from "@/components/sections/reveal";
-import { services } from "@/data/services";
+import { getPublicServices } from "@/lib/services";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -13,7 +15,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getPublicServices();
   return (
     <>
       <section className="pt-20 sm:pt-28 pb-12">

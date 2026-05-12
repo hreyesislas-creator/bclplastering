@@ -53,6 +53,24 @@ export interface Project {
   updated_at?: string;
 }
 
+export interface ServiceRow {
+  id: string;
+  title: string;
+  slug: string;
+  category: string | null;
+  short_description: string | null;
+  description: string | null;
+  bullets: string[];
+  price_label: string | null;
+  icon_key: string | null;
+  image_url: string | null;
+  is_active: boolean;
+  featured: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export type SiteImageMediaType = "image" | "youtube";
 
 export interface SiteImage {
