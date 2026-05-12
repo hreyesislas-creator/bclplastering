@@ -1,15 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { z } from "zod";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-
-const schema = z.object({
-  email: z.string().trim().email("Enter a valid email"),
-  password: z.string().min(6, "Password is too short"),
-  next: z.string().optional(),
-});
 
 export interface SignInResult {
   ok: boolean;
@@ -21,22 +14,21 @@ export async function signIn(formData: FormData): Promise<SignInResult> {
     return { ok: false, error: "Supabase is not configured." };
   }
 
-  const parsed = schema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
-    next: formData.get("next"),
-  });
-  if (!parsed.success) {
-    return {
-      ok: false,
-      error: parsed.error.issues[0]?.message ?? "Invalid credentials.",
-    };
+  // FormData fields can be null when a browser quirk or autofill
+  // submits before a value is set — coerce to string so the schema
+  // and Supabase Auth never see a null.
+  const email = String(formData.get("email") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
+  const nextRaw = String(formData.get("next") ?? "");
+
+  if (!email || !password) {
+    return { ok: false, error: "Enter your email and password." };
   }
 
   const supabase = await createServerSupabase();
   const { error } = await supabase.auth.signInWithPassword({
-    email: parsed.data.email,
-    password: parsed.data.password,
+    email,
+    password,
   });
 
   if (error) {
@@ -49,9 +41,7 @@ export async function signIn(formData: FormData): Promise<SignInResult> {
     };
   }
 
-  const target = parsed.data.next?.startsWith("/dashboard")
-    ? parsed.data.next
-    : "/dashboard";
+  const target = nextRaw.startsWith("/dashboard") ? nextRaw : "/dashboard";
   redirect(target);
 }
 
