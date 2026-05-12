@@ -57,13 +57,16 @@ create table public.projects (
   service_type service_type not null,
   description text not null,
   short_description text,
+  category text,
   cover_image_url text not null,
   before_images text[] not null default '{}',
   after_images text[] not null default '{}',
   featured boolean not null default false,
+  sort_order integer not null default 0,
   youtube_url text,
   youtube_embed_url text,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
 
 -- See supabase/migrations/0001_media_manager.sql for the site_images

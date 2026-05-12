@@ -99,7 +99,7 @@ export function ProjectCard({
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
             <div>
               <Badge variant="outline" className="bg-background/70 backdrop-blur">
-                {service?.title ?? project.service_type}
+                {project.category || service?.title || project.service_type}
               </Badge>
             </div>
             <span className="grid h-9 w-9 place-items-center rounded-full bg-background/80 text-foreground backdrop-blur transition-all group-hover:bg-gold group-hover:text-gold-foreground">

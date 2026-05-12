@@ -6,9 +6,11 @@ import Image from "next/image";
 import {
   ArrowUpRight,
   Loader2,
+  Pencil,
   Star,
   Trash2,
   MapPin,
+  PlayCircle,
 } from "lucide-react";
 import type { Project } from "@/types/db";
 import { services } from "@/data/services";
@@ -27,7 +29,12 @@ export function DashboardProjectCard({ project }: DashboardProjectCardProps) {
   const [error, setError] = React.useState<string | null>(null);
 
   const onDelete = () => {
-    if (!confirm(`Delete "${project.title}"? This cannot be undone.`)) return;
+    if (
+      !confirm(
+        `Delete "${project.title}"? This removes it from /projects, /gallery, and the homepage. This cannot be undone.`
+      )
+    )
+      return;
     setError(null);
     deleteTransition(async () => {
       const res = await deleteProject(project.id);
@@ -77,6 +84,14 @@ export function DashboardProjectCard({ project }: DashboardProjectCardProps) {
             Featured
           </Badge>
         ) : null}
+        {project.youtube_embed_url ? (
+          <span
+            aria-hidden
+            className="absolute top-3 right-3 grid h-8 w-8 place-items-center rounded-full bg-background/80 text-gold backdrop-blur"
+          >
+            <PlayCircle className="h-4 w-4" />
+          </span>
+        ) : null}
       </div>
 
       <div className="flex flex-1 flex-col p-5">
@@ -88,11 +103,16 @@ export function DashboardProjectCard({ project }: DashboardProjectCardProps) {
             <MapPin className="h-3 w-3" />
             {project.city}
           </span>
-          <span>{service?.title ?? project.service_type}</span>
+          <span>{project.category || service?.title || project.service_type}</span>
           <span>{new Date(project.created_at).toLocaleDateString()}</span>
         </div>
         <p className="mt-3 text-sm text-muted-foreground line-clamp-2">
-          {project.description}
+          {project.short_description || project.description}
+        </p>
+
+        <p className="mt-3 text-[11px] uppercase tracking-wider text-muted-foreground">
+          Appears on /projects · /gallery
+          {featured ? " · homepage" : ""}
         </p>
 
         {error ? (
@@ -100,14 +120,22 @@ export function DashboardProjectCard({ project }: DashboardProjectCardProps) {
         ) : null}
 
         <div className="mt-auto pt-5 flex items-center justify-between gap-2 border-t border-border/60">
-          <Link
-            href={`/projects/${project.slug}`}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-medium text-gold hover:underline"
-          >
-            View live <ArrowUpRight className="h-3.5 w-3.5" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/dashboard/projects/${project.id}/edit`}
+              className="inline-flex items-center gap-1 text-xs font-medium text-foreground hover:text-gold"
+            >
+              <Pencil className="h-3.5 w-3.5" /> Edit
+            </Link>
+            <Link
+              href={`/projects/${project.slug}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-gold"
+            >
+              View live <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
           <div className="flex items-center gap-1.5">
             <button
               type="button"

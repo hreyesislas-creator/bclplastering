@@ -266,7 +266,7 @@ function Tile({ project, aspect }: { project: Project; aspect: string }) {
 
         <div className="absolute inset-0 flex flex-col justify-end p-5 translate-y-2 opacity-90 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <span className="text-[11px] uppercase tracking-[0.18em] text-gold/90">
-            {service?.title ?? project.service_type}
+            {project.category || service?.title || project.service_type}
           </span>
           <h3 className="mt-1.5 font-display text-lg sm:text-xl font-semibold text-foreground line-clamp-2">
             {project.title}

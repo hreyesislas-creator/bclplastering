@@ -97,33 +97,33 @@ export const images = {
     },
   } as Record<string, BeforeAfterRef>,
   projects: {
-    "riverside-stucco-restoration": off(
+    "spanish-revival-stucco-restoration": off(
       "/projects/stucco-repair/riverside-cover.jpg",
-      "Riverside stucco restoration, finished envelope"
+      "Spanish revival stucco restoration in Riverside"
     ),
-    "moreno-valley-exterior-remodel": off(
+    "whole-home-exterior-remodel": off(
       "/projects/remodeling/moreno-valley-cover.jpg",
-      "Moreno Valley exterior remodel, finished facade"
+      "Whole-home exterior remodel in Moreno Valley"
     ),
-    "corona-smooth-finish-stucco": off(
+    "smooth-finish-stucco-new-build": off(
       "/projects/stucco-installation/corona-cover.jpg",
-      "Corona smooth finish stucco, finished home"
+      "Smooth finish stucco new build in Corona"
     ),
-    "eastvale-modern-kitchen": off(
+    "open-concept-kitchen-remodel": off(
       "/projects/remodeling/eastvale-cover.jpg",
-      "Eastvale modern kitchen remodel"
+      "Open-concept kitchen remodel in Eastvale"
     ),
-    "menifee-tadelakt-bath": off(
+    "tadelakt-powder-room": off(
       "/projects/remodeling/menifee-cover.jpg",
-      "Menifee Tadelakt powder room"
+      "Tadelakt powder room in Menifee"
     ),
-    "perris-adu-stucco-match": off(
+    "adu-exterior-stucco-match": off(
       "/projects/stucco-installation/perris-cover.jpg",
-      "Perris ADU exterior stucco texture match"
+      "ADU exterior stucco texture match in Perris"
     ),
-    "jurupa-valley-drywall-restoration": off(
+    "drywall-restoration-after-water-damage": off(
       "/projects/drywall/jurupa-cover.jpg",
-      "Jurupa Valley drywall restoration"
+      "Drywall restoration after water damage in Jurupa Valley"
     ),
   } as Record<string, ImageRef>,
   reviewers: {

@@ -41,13 +41,16 @@ export interface Project {
   service_type: ServiceType;
   description: string;
   short_description?: string | null;
+  category?: string | null;
   cover_image_url: string;
   before_images: string[];
   after_images: string[];
   featured: boolean;
+  sort_order?: number;
   youtube_url?: string | null;
   youtube_embed_url?: string | null;
   created_at: string;
+  updated_at?: string;
 }
 
 export type SiteImageMediaType = "image" | "youtube";
