@@ -62,23 +62,42 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
     : null;
   const manifestMobile = images.hero.mobile.enabled ? images.hero.mobile : null;
 
-  const heroBgUrl = dbPrimaryUrl || manifestPrimary?.src || null;
-  const heroBgAlt =
-    dbPrimaryAlt || manifestPrimary?.alt || "BCL Plastering hero";
-  const heroMobileUrl = dbMobileUrl || manifestMobile?.src || null;
+  const heroPrimaryUrl = dbPrimaryUrl || manifestPrimary?.src || null;
+  const heroPrimaryAlt =
+    dbPrimaryAlt || manifestPrimary?.alt || "Finished BCL Plastering project";
+  // Mobile-specific crop is currently unused at the section level —
+  // the hero image lives inside the right card and is responsive on
+  // its own. The slot is still read so the admin sees the upload
+  // status; we'll wire a separate mobile layer back in when needed.
+  void dbMobileUrl;
+  void manifestMobile;
+
   const heroVideoEmbed = isValidYoutubeEmbed(dbVideoEmbed)
     ? dbVideoEmbed
     : null;
 
-  const hasMedia = Boolean(heroVideoEmbed || heroBgUrl);
+  // Hero image renders inside the right card — see below. We only
+  // need to darken the surrounding section when a hero VIDEO is
+  // playing behind everything.
+  const showDarkenedSection = Boolean(heroVideoEmbed);
 
   const showcase = images.hero.showcasePortrait.enabled
     ? images.hero.showcasePortrait
     : null;
 
+  // The right-side card prefers the dashboard hero photo, then the
+  // legacy portrait showcase, then a gradient placeholder.
+  const cardImageUrl = heroPrimaryUrl || showcase?.src || null;
+  const cardImageAlt = heroPrimaryUrl
+    ? heroPrimaryAlt
+    : showcase?.alt || "BCL Plastering finished work";
+  const showHeroBadge =
+    process.env.NODE_ENV !== "production" && Boolean(heroPrimaryUrl);
+
   return (
     <section className="relative overflow-hidden">
-      {/* Cinematic background — video first, image second, gradient (below) third */}
+      {/* Cinematic background VIDEO only — the still hero image lives
+          inside the right-side card so it stays clearly visible. */}
       {heroVideoEmbed ? (
         <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden">
           <iframe
@@ -89,50 +108,15 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
             className="pointer-events-none absolute left-1/2 top-1/2 h-[120vh] min-h-full w-[177vh] min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
           />
         </div>
-      ) : heroBgUrl ? (
-        <div aria-hidden className="absolute inset-0 -z-20">
-          {/* Mobile crop when one is supplied — otherwise the primary
-              image covers both layouts. next/image handles either
-              public asset or a Supabase Storage URL via next.config. */}
-          {heroMobileUrl && heroMobileUrl !== heroBgUrl ? (
-            <>
-              <Image
-                src={heroMobileUrl}
-                alt={heroBgAlt}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover sm:hidden"
-              />
-              <Image
-                src={heroBgUrl}
-                alt={heroBgAlt}
-                fill
-                priority
-                sizes="100vw"
-                className="hidden object-cover sm:block"
-              />
-            </>
-          ) : (
-            <Image
-              src={heroBgUrl}
-              alt={heroBgAlt}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-          )}
-        </div>
       ) : null}
 
       {/* Layered light & overlay */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        {/* darken if photo/video, atmosphere if not */}
+        {/* darken only when a hero VIDEO is playing behind the section */}
         <div
           className="absolute inset-0"
           style={{
-            background: hasMedia
+            background: showDarkenedSection
               ? "linear-gradient(105deg, oklch(0.10 0.005 60 / 0.85) 0%, oklch(0.10 0.005 60 / 0.55) 50%, oklch(0.10 0.005 60 / 0.30) 100%), linear-gradient(180deg, oklch(0.10 0.005 60 / 0.20) 0%, oklch(0.10 0.005 60 / 0.55) 60%, oklch(0.10 0.005 60) 100%)"
               : "radial-gradient(60% 50% at 70% 0%, oklch(0.34 0.05 78 / 0.65), transparent 70%), radial-gradient(50% 60% at 0% 30%, oklch(0.78 0.11 78 / 0.10), transparent 70%), radial-gradient(40% 50% at 50% 100%, oklch(0.78 0.11 78 / 0.06), transparent 70%)",
           }}
@@ -274,14 +258,15 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
             transition={{ duration: 0.9, delay: 0.2, ease }}
             className="lg:col-span-5 relative"
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden vignette surface-elevated">
-              {showcase ? (
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden surface-elevated">
+              {/* Layer 1 — the hero image itself (or a premium gradient fallback) */}
+              {cardImageUrl ? (
                 <Image
-                  src={showcase.src}
-                  alt={showcase.alt}
+                  src={cardImageUrl}
+                  alt={cardImageAlt}
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  sizes="(max-width: 768px) 100vw, 45vw"
                   className="object-cover"
                 />
               ) : (
@@ -306,10 +291,21 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
                 </>
               )}
 
-              {/* darken bottom for legibility */}
+              {/* Layer 2 — bottom dark gradient for testimonial legibility.
+                  Stops near 55% so the upper half of the photo stays clear. */}
               <div
                 aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/30 to-transparent"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-background/85 via-background/45 to-transparent"
+              />
+
+              {/* Layer 3 — subtle side vignette (max 20% black) */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, oklch(0 0 0 / 0.18) 0%, transparent 14%, transparent 86%, oklch(0 0 0 / 0.18) 100%)",
+                }}
               />
 
               <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-3 py-1 text-xs font-medium text-emerald-200 backdrop-blur">
@@ -319,6 +315,12 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
                 </span>
                 Booking estimates this week
               </div>
+
+              {showHeroBadge ? (
+                <div className="absolute top-5 right-5 rounded-md bg-gold/95 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold-foreground shadow-soft">
+                  Hero image loaded
+                </div>
+              ) : null}
 
               <div className="absolute inset-0 p-7 sm:p-9 flex flex-col justify-end">
                 <div className="flex items-center gap-1.5 text-gold">
