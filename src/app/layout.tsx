@@ -5,6 +5,7 @@ import { site } from "@/lib/site";
 import { env, logEnvSummary } from "@/lib/env";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { MetaPixel } from "@/components/analytics/meta-pixel";
+import { getSiteImages } from "@/lib/site-images";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,7 +26,20 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  let ogImageUrl = "/og.png";
+  try {
+    const map = await getSiteImages();
+    const dbOg = map["og_image"]?.image_url;
+    if (dbOg) ogImageUrl = dbOg;
+  } catch {
+    // Fall back to the static asset — never break metadata.
+  }
+  return baseMetadata(ogImageUrl);
+}
+
+function baseMetadata(ogImageUrl: string): Metadata {
+  return {
   metadataBase: new URL(env.siteUrl),
   title: {
     default: `${site.name} — California stucco, plastering & remodels`,
@@ -59,7 +73,7 @@ export const metadata: Metadata = {
     description: site.description,
     images: [
       {
-        url: "/og.png",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
         alt: `${site.shortName} — premium stucco & remodels in the Inland Empire`,
@@ -70,7 +84,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: site.name,
     description: site.description,
-    images: ["/og.png"],
+    images: [ogImageUrl],
   },
   robots: {
     index: true,
@@ -99,7 +113,8 @@ export const metadata: Metadata = {
     "geo.region": "US-CA",
     "geo.placename": "Riverside, California",
   },
-};
+  };
+}
 
 export default function RootLayout({
   children,

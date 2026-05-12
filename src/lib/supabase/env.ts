@@ -15,6 +15,7 @@ export const supabaseStorageBuckets = {
   leadUploads: "lead-uploads",
   projectGallery: "project-gallery",
   beforeAfter: "before-after",
+  siteImages: "site-images",
 } as const;
 
 export type SupabaseStorageBucket =

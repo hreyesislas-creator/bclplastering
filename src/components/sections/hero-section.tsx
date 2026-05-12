@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { site } from "@/lib/site";
 import { images } from "@/lib/images";
+import type { SiteImageMap } from "@/types/db";
 import {
   trackEstimateCta,
   trackPhone,
@@ -42,16 +43,42 @@ const trustWords = [
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function HeroSection() {
-  const heroBg = images.hero.primary.enabled ? images.hero.primary : null;
+interface HeroSectionProps {
+  siteImages?: SiteImageMap;
+}
+
+export function HeroSection({ siteImages }: HeroSectionProps = {}) {
+  const dbPrimary = siteImages?.hero_primary;
+  const dbVideo = siteImages?.hero_video;
+  const heroBgUrl =
+    dbPrimary?.image_url ||
+    (images.hero.primary.enabled ? images.hero.primary.src : null);
+  const heroBgAlt =
+    dbPrimary?.alt_text ||
+    (images.hero.primary.enabled
+      ? images.hero.primary.alt
+      : "BCL Plastering hero");
+  const heroBg = heroBgUrl ? { src: heroBgUrl, alt: heroBgAlt } : null;
+  const heroVideoEmbed = dbVideo?.youtube_embed_url ?? null;
+
   const showcase = images.hero.showcasePortrait.enabled
     ? images.hero.showcasePortrait
     : null;
 
   return (
     <section className="relative overflow-hidden">
-      {/* Cinematic background image (when enabled) */}
-      {heroBg ? (
+      {/* Cinematic background video (when linked) */}
+      {heroVideoEmbed ? (
+        <div aria-hidden className="absolute inset-0 -z-20">
+          <iframe
+            title="Hero background video"
+            src={buildHeroVideoEmbed(heroVideoEmbed)}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            loading="lazy"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[120vh] min-h-full w-[177vh] min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
+          />
+        </div>
+      ) : heroBg ? (
         <div aria-hidden className="absolute inset-0 -z-20">
           <Image
             src={heroBg.src}
@@ -66,13 +93,14 @@ export function HeroSection() {
 
       {/* Layered light & overlay */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        {/* darken if photo, atmosphere if not */}
+        {/* darken if photo/video, atmosphere if not */}
         <div
           className="absolute inset-0"
           style={{
-            background: heroBg
-              ? "linear-gradient(105deg, oklch(0.10 0.005 60 / 0.85) 0%, oklch(0.10 0.005 60 / 0.55) 50%, oklch(0.10 0.005 60 / 0.30) 100%), linear-gradient(180deg, oklch(0.10 0.005 60 / 0.20) 0%, oklch(0.10 0.005 60 / 0.55) 60%, oklch(0.10 0.005 60) 100%)"
-              : "radial-gradient(60% 50% at 70% 0%, oklch(0.34 0.05 78 / 0.65), transparent 70%), radial-gradient(50% 60% at 0% 30%, oklch(0.78 0.11 78 / 0.10), transparent 70%), radial-gradient(40% 50% at 50% 100%, oklch(0.78 0.11 78 / 0.06), transparent 70%)",
+            background:
+              heroBg || heroVideoEmbed
+                ? "linear-gradient(105deg, oklch(0.10 0.005 60 / 0.85) 0%, oklch(0.10 0.005 60 / 0.55) 50%, oklch(0.10 0.005 60 / 0.30) 100%), linear-gradient(180deg, oklch(0.10 0.005 60 / 0.20) 0%, oklch(0.10 0.005 60 / 0.55) 60%, oklch(0.10 0.005 60) 100%)"
+                : "radial-gradient(60% 50% at 70% 0%, oklch(0.34 0.05 78 / 0.65), transparent 70%), radial-gradient(50% 60% at 0% 30%, oklch(0.78 0.11 78 / 0.10), transparent 70%), radial-gradient(40% 50% at 50% 100%, oklch(0.78 0.11 78 / 0.06), transparent 70%)",
           }}
         />
         {/* warm spot light from upper-right */}
@@ -328,4 +356,21 @@ export function HeroSection() {
       </div>
     </section>
   );
+}
+
+function buildHeroVideoEmbed(embedUrl: string): string {
+  const match = embedUrl.match(/\/embed\/([a-zA-Z0-9_-]{11})/);
+  const id = match ? match[1] : "";
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    loop: "1",
+    controls: "0",
+    showinfo: "0",
+    modestbranding: "1",
+    rel: "0",
+    playsinline: "1",
+    playlist: id,
+  });
+  return `${embedUrl}?${params.toString()}`;
 }

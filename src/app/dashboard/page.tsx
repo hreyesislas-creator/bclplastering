@@ -5,6 +5,7 @@ import {
   Star,
   ArrowRight,
   ExternalLink,
+  Image as ImageIcon,
 } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { LeadsList } from "@/components/dashboard/leads-list";
@@ -16,6 +17,7 @@ import { logger } from "@/lib/logger";
 import type { Lead, LeadStatus } from "@/types/db";
 import { reviews } from "@/data/reviews";
 import { projects } from "@/data/projects";
+import { listSiteImages } from "@/lib/site-images";
 
 export const dynamic = "force-dynamic";
 
@@ -78,7 +80,15 @@ async function loadOverview(): Promise<Overview> {
 }
 
 export default async function DashboardPage() {
-  const overview = await loadOverview();
+  const [overview, siteMedia] = await Promise.all([
+    loadOverview(),
+    listSiteImages(),
+  ]);
+  const filledMedia = siteMedia.filter(
+    (s) =>
+      (s.media_type === "image" && s.image_url) ||
+      (s.media_type === "youtube" && s.youtube_embed_url)
+  ).length;
 
   const stats = [
     {
@@ -88,16 +98,16 @@ export default async function DashboardPage() {
       href: "/dashboard/leads",
     },
     {
-      label: "Total leads",
-      value: overview.total,
-      icon: Inbox,
-      href: "/dashboard/leads",
-    },
-    {
       label: "Published projects",
       value: projects.length,
       icon: Building2,
       href: "/dashboard/projects",
+    },
+    {
+      label: "Site media",
+      value: `${filledMedia}/${siteMedia.length}`,
+      icon: ImageIcon,
+      href: "/dashboard/images",
     },
     {
       label: "Reviews",

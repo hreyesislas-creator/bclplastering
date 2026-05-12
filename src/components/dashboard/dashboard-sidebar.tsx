@@ -9,6 +9,8 @@ import {
   Star,
   Settings,
   ArrowUpRight,
+  Image as ImageIcon,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +20,8 @@ const items: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/leads", label: "Leads", icon: Inbox },
   { href: "/dashboard/projects", label: "Projects", icon: Building2 },
+  { href: "/dashboard/images", label: "Website Images", icon: ImageIcon },
+  { href: "/dashboard/media", label: "Media Library", icon: Video },
   { href: "/dashboard/reviews", label: "Reviews", icon: Star },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];

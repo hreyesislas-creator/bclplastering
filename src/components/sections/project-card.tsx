@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MapPin, ArrowUpRight } from "lucide-react";
+import { MapPin, ArrowUpRight, PlayCircle } from "lucide-react";
 import type { Project } from "@/types/db";
 import { Badge } from "@/components/ui/badge";
 import { SmartImage } from "@/components/ui/smart-image";
@@ -13,16 +13,28 @@ import { images } from "@/lib/images";
 interface ProjectCardProps {
   project: Project;
   className?: string;
+  /** Optional override from the dashboard media manager. */
+  coverOverride?: string | null;
+  /** Optional alt text from the dashboard. */
+  altOverride?: string | null;
 }
 
-export function ProjectCard({ project, className }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  className,
+  coverOverride,
+  altOverride,
+}: ProjectCardProps) {
   const service = services.find((s) => s.type === project.service_type);
   const manifest = images.projects[project.slug];
   const coverUrl =
+    coverOverride ||
     project.cover_image_url ||
     (manifest?.enabled ? manifest.src : "");
-  const coverAlt = manifest?.alt ?? project.title;
+  const coverAlt = altOverride || manifest?.alt || project.title;
   const showImage = Boolean(coverUrl);
+  const description = project.short_description || project.description;
+  const hasVideo = Boolean(project.youtube_embed_url);
 
   return (
     <Link
@@ -75,6 +87,14 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
               Featured
             </Badge>
           ) : null}
+          {hasVideo ? (
+            <span
+              aria-hidden
+              className="absolute top-4 right-4 grid h-9 w-9 place-items-center rounded-full bg-background/80 text-gold backdrop-blur"
+            >
+              <PlayCircle className="h-5 w-5" />
+            </span>
+          ) : null}
 
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
             <div>
@@ -96,7 +116,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
             {project.city}
           </p>
           <p className="mt-3 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-            {project.description}
+            {description}
           </p>
         </div>
       </motion.div>

@@ -5,6 +5,7 @@ import { CTASection } from "@/components/sections/cta-section";
 import { GalleryGrid } from "@/components/sections/gallery-grid";
 import { Reveal } from "@/components/sections/reveal";
 import { getPublicProjects } from "@/lib/public-data";
+import { getSiteImages } from "@/lib/site-images";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -16,7 +17,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
-  const projects = await getPublicProjects();
+  const [projects, siteImages] = await Promise.all([
+    getPublicProjects(),
+    getSiteImages(),
+  ]);
   return (
     <>
       <section className="pt-20 sm:pt-28 pb-10">
@@ -39,7 +43,7 @@ export default async function GalleryPage() {
 
       <section className="pb-20 sm:pb-28">
         <Container>
-          <GalleryGrid projects={projects} />
+          <GalleryGrid projects={projects} siteImages={siteImages} />
         </Container>
       </section>
 

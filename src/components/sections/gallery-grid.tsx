@@ -3,16 +3,17 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
-import type { Project } from "@/types/db";
-import type { ServiceType } from "@/types/db";
+import { ArrowUpRight, MapPin, PlayCircle } from "lucide-react";
+import type { Project, SiteImage, SiteImageMap, ServiceType } from "@/types/db";
 import { services } from "@/data/services";
 import { images } from "@/lib/images";
 import { SmartImage } from "@/components/ui/smart-image";
+import { youtubeThumbnail } from "@/lib/site-images/youtube";
 import { cn } from "@/lib/utils";
 
 interface GalleryGridProps {
   projects: Project[];
+  siteImages?: SiteImageMap;
 }
 
 type Filter = "all" | ServiceType;
@@ -38,7 +39,7 @@ const aspectClasses = [
   "aspect-[5/6]",
 ];
 
-export function GalleryGrid({ projects }: GalleryGridProps) {
+export function GalleryGrid({ projects, siteImages }: GalleryGridProps) {
   const [active, setActive] = React.useState<Filter>("all");
 
   const filtered = React.useMemo(
@@ -48,6 +49,17 @@ export function GalleryGrid({ projects }: GalleryGridProps) {
         : projects.filter((p) => p.service_type === active),
     [active, projects]
   );
+
+  const galleryVideos = React.useMemo<SiteImage[]>(() => {
+    const map = siteImages ?? {};
+    return [map["gallery_video_1"], map["gallery_video_2"]].filter(
+      (v): v is SiteImage => Boolean(v?.youtube_embed_url)
+    );
+  }, [siteImages]);
+
+  // Only surface videos when the "all" filter is active — they're not
+  // tied to a service category.
+  const showVideos = active === "all" && galleryVideos.length > 0;
 
   return (
     <div>
@@ -83,6 +95,15 @@ export function GalleryGrid({ projects }: GalleryGridProps) {
       {/* Masonry — CSS columns */}
       <div className="mt-10 columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-5 [column-fill:_balance]">
         <AnimatePresence mode="popLayout">
+          {showVideos
+            ? galleryVideos.map((video, i) => (
+                <VideoTile
+                  key={video.id}
+                  video={video}
+                  aspect={aspectClasses[i % aspectClasses.length]}
+                />
+              ))
+            : null}
           {filtered.map((project, i) => (
             <Tile
               key={project.id}
@@ -105,6 +126,80 @@ export function GalleryGrid({ projects }: GalleryGridProps) {
         </div>
       ) : null}
     </div>
+  );
+}
+
+function VideoTile({ video, aspect }: { video: SiteImage; aspect: string }) {
+  const [playing, setPlaying] = React.useState(false);
+  const thumb = youtubeThumbnail(video.youtube_embed_url);
+  const label = video.alt_text || video.label;
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="mb-4 sm:mb-5 break-inside-avoid"
+    >
+      <div
+        className={cn(
+          "group relative block overflow-hidden rounded-2xl border border-border bg-surface-2 hover-halo",
+          aspect
+        )}
+      >
+        {playing && video.youtube_embed_url ? (
+          <iframe
+            title={label}
+            src={`${video.youtube_embed_url}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            aria-label={`Play ${label}`}
+            className="absolute inset-0 cursor-pointer"
+          >
+            {thumb ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={thumb}
+                alt={label}
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            ) : (
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, oklch(0.32 0.012 60), oklch(0.20 0.006 60) 60%, oklch(0.14 0.006 60))",
+                }}
+              />
+            )}
+            <div className="absolute inset-0 grid place-items-center bg-background/30 transition-colors group-hover:bg-background/20">
+              <span className="grid h-14 w-14 place-items-center rounded-full bg-gold text-gold-foreground shadow-soft transition-transform group-hover:scale-110">
+                <PlayCircle className="h-7 w-7" />
+              </span>
+            </div>
+            <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-background to-transparent">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-gold/90">
+                Video
+              </span>
+              <h3 className="mt-1.5 font-display text-lg font-semibold text-foreground line-clamp-2">
+                {video.label}
+              </h3>
+            </div>
+          </button>
+        )}
+      </div>
+    </motion.div>
   );
 }
 

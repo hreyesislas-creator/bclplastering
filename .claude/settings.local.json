@@ -10,7 +10,10 @@
       "Read(//c/c/Users/hhrey/Documents/bclplastering/bclplastering/src/app/**)",
       "Bash(npm run *)",
       "Bash(rm -f file.svg globe.svg next.svg vercel.svg window.svg)",
-      "Read(//c/c/Users/hhrey/Documents/bclplastering/bclplastering/**)"
+      "Read(//c/c/Users/hhrey/Documents/bclplastering/bclplastering/**)",
+      "Bash(grep -iE \"^\\(image|video|play|youtube|rotate-ccw|trash|loader|alert-circle|check-circle|image-plus|x\\).*\\\\.js$\")",
+      "Bash(grep -iE \"^\\(youtube|x\\).*\\\\.mjs$\")",
+      "Bash(npx --no-install tsc --noEmit)"
     ]
   }
 }

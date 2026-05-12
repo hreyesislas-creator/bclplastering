@@ -24,8 +24,13 @@ const schema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug must be kebab-case (lowercase, hyphens)"),
   city: z.string().min(2, "City is required"),
   service_type: z.enum(SERVICE_TYPES),
-  description: z.string().min(20, "Add a short description (20+ chars)"),
+  description: z.string().min(20, "Add a longer description (20+ chars)"),
+  short_description: z
+    .string()
+    .max(280, "Keep the short description under 280 characters")
+    .optional(),
   featured: z.boolean().optional(),
+  youtube_url: z.string().max(500).optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -71,6 +76,9 @@ export function ProjectUploadForm() {
     fd.append("city", values.city);
     fd.append("service_type", values.service_type);
     fd.append("description", values.description);
+    if (values.short_description)
+      fd.append("short_description", values.short_description);
+    if (values.youtube_url) fd.append("youtube_url", values.youtube_url);
     if (values.featured) fd.append("featured", "on");
     if (cover[0]) fd.append("cover", cover[0].file, cover[0].file.name);
     for (const f of before) fd.append("before", f.file, f.file.name);
@@ -151,11 +159,47 @@ export function ProjectUploadForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="short_description">
+          Short description{" "}
+          <span className="text-muted-foreground">
+            (1-2 lines for cards · optional)
+          </span>
+        </Label>
+        <Input
+          id="short_description"
+          placeholder="Hand-troweled smooth finish on a 1960s ranch."
+          {...register("short_description")}
+        />
+        {errors.short_description ? (
+          <p className="text-xs text-destructive">
+            {errors.short_description.message}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="description">Full description</Label>
         <Textarea id="description" rows={4} {...register("description")} />
         {errors.description ? (
           <p className="text-xs text-destructive">{errors.description.message}</p>
         ) : null}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="youtube_url">
+          YouTube URL{" "}
+          <span className="text-muted-foreground">(optional)</span>
+        </Label>
+        <Input
+          id="youtube_url"
+          type="url"
+          inputMode="url"
+          placeholder="https://www.youtube.com/watch?v=…"
+          {...register("youtube_url")}
+        />
+        <p className="text-xs text-muted-foreground">
+          Adds a play-icon badge on the project cover.
+        </p>
       </div>
 
       <div className="space-y-2">

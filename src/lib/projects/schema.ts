@@ -22,7 +22,9 @@ export const projectInputSchema = z.object({
   city: z.string().trim().min(2).max(120),
   service_type: z.enum(SERVICE_TYPES),
   description: z.string().trim().min(20).max(2000),
+  short_description: z.string().trim().max(280).optional(),
   featured: z.boolean().optional().default(false),
+  youtube_url: z.string().trim().max(500).optional(),
 });
 
 export type ProjectInput = z.infer<typeof projectInputSchema>;

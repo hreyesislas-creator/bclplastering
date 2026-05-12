@@ -9,6 +9,7 @@ import {
   uploadProjectImages,
   ProjectUploadError,
 } from "@/lib/projects/storage";
+import { normalizeYoutubeUrl } from "@/lib/site-images";
 import { logger } from "@/lib/logger";
 
 export interface ActionResult {
@@ -30,7 +31,9 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
     city: formData.get("city"),
     service_type: formData.get("service_type"),
     description: formData.get("description"),
+    short_description: formData.get("short_description") ?? undefined,
     featured: formData.get("featured") === "on",
+    youtube_url: formData.get("youtube_url") ?? undefined,
   });
   if (!parsed.success) {
     return {
@@ -75,6 +78,15 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
       "after"
     );
 
+    const youtubeRaw = parsed.data.youtube_url?.trim();
+    const youtubeEmbed = youtubeRaw ? normalizeYoutubeUrl(youtubeRaw) : null;
+    if (youtubeRaw && !youtubeEmbed) {
+      return {
+        ok: false,
+        error: "YouTube URL didn't look right — paste the full link.",
+      };
+    }
+
     const { error } = await supabase.from("projects").insert({
       id: projectId,
       title: parsed.data.title,
@@ -82,10 +94,13 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
       city: parsed.data.city,
       service_type: parsed.data.service_type,
       description: parsed.data.description,
+      short_description: parsed.data.short_description || null,
       cover_image_url: coverUrl,
       before_images: beforeUploads.map((u) => u.url),
       after_images: afterUploads.map((u) => u.url),
       featured: parsed.data.featured ?? false,
+      youtube_url: youtubeRaw || null,
+      youtube_embed_url: youtubeEmbed,
     });
 
     if (error) {

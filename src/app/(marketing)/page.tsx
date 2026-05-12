@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/sections/section-heading";
 import { ServiceCard } from "@/components/sections/service-card";
 import { ProjectCard } from "@/components/sections/project-card";
 import { BeforeAfterShowcase } from "@/components/sections/before-after-showcase";
+import { FeaturedVideoSection } from "@/components/sections/featured-video-section";
 import { ReviewsSection } from "@/components/sections/reviews-section";
 import { ServiceAreasSection } from "@/components/sections/service-areas-section";
 import { CTASection } from "@/components/sections/cta-section";
@@ -17,14 +18,16 @@ import { localBusinessSchema } from "@/lib/seo/jsonld";
 import { services } from "@/data/services";
 import { getPublicProjects, getPublicReviews } from "@/lib/public-data";
 import { getSiteSettings } from "@/lib/settings";
+import { getSiteImages } from "@/lib/site-images";
 import { env } from "@/lib/env";
 import { site } from "@/lib/site";
 
 export default async function HomePage() {
-  const [projects, reviews, settings] = await Promise.all([
+  const [projects, reviews, settings, siteImages] = await Promise.all([
     getPublicProjects(),
     getPublicReviews(),
     getSiteSettings(),
+    getSiteImages(),
   ]);
   const ld = localBusinessSchema({
     settings,
@@ -33,11 +36,18 @@ export default async function HomePage() {
   });
   const featured = projects.filter((p) => p.featured).slice(0, 3);
   const fallback = featured.length > 0 ? featured : projects.slice(0, 3);
+  const featuredCoverKeys = [
+    "home_featured_project_1",
+    "home_featured_project_2",
+    "home_featured_project_3",
+  ];
+  const featuredVideoEmbed =
+    siteImages["homepage_feature_video"]?.youtube_embed_url ?? null;
 
   return (
     <>
       <JsonLd data={ld} id="ld-org" />
-      <HeroSection />
+      <HeroSection siteImages={siteImages} />
 
       <TrustSection />
 
@@ -72,7 +82,7 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <BeforeAfterShowcase />
+      <BeforeAfterShowcase siteImages={siteImages} />
 
       <section className="py-20 sm:py-32 border-y border-border/60 bg-surface/20">
         <Container>
@@ -96,14 +106,25 @@ export default async function HomePage() {
             </div>
           </Reveal>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {fallback.map((p, i) => (
-              <Reveal key={p.id} delay={i * 0.08}>
-                <ProjectCard project={p} />
-              </Reveal>
-            ))}
+            {fallback.map((p, i) => {
+              const coverSlot = siteImages[featuredCoverKeys[i]];
+              return (
+                <Reveal key={p.id} delay={i * 0.08}>
+                  <ProjectCard
+                    project={p}
+                    coverOverride={coverSlot?.image_url ?? null}
+                    altOverride={coverSlot?.alt_text ?? null}
+                  />
+                </Reveal>
+              );
+            })}
           </div>
         </Container>
       </section>
+
+      {featuredVideoEmbed ? (
+        <FeaturedVideoSection embedUrl={featuredVideoEmbed} />
+      ) : null}
 
       <ReviewsSection reviews={reviews} total={Math.max(site.reviewsCount, reviews.length)} />
 

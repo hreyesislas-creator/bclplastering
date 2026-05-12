@@ -40,12 +40,39 @@ export interface Project {
   city: string;
   service_type: ServiceType;
   description: string;
+  short_description?: string | null;
   cover_image_url: string;
   before_images: string[];
   after_images: string[];
   featured: boolean;
+  youtube_url?: string | null;
+  youtube_embed_url?: string | null;
   created_at: string;
 }
+
+export type SiteImageMediaType = "image" | "youtube";
+
+export interface SiteImage {
+  id: string;
+  image_key: string;
+  label: string;
+  description: string | null;
+  recommended_width: number | null;
+  recommended_height: number | null;
+  section: string | null;
+  page: string | null;
+  image_url: string | null;
+  alt_text: string | null;
+  media_type: SiteImageMediaType;
+  youtube_url: string | null;
+  youtube_embed_url: string | null;
+  sort_order: number;
+  is_required: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export type SiteImageMap = Record<string, SiteImage>;
 
 export interface Review {
   id: string;
@@ -83,6 +110,14 @@ export interface Database {
         Row: Review;
         Insert: Omit<Review, "id" | "created_at"> & { id?: string };
         Update: Partial<Review>;
+        Relationships: [];
+      };
+      site_images: {
+        Row: SiteImage;
+        Insert: Omit<SiteImage, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+        };
+        Update: Partial<SiteImage>;
         Relationships: [];
       };
     };

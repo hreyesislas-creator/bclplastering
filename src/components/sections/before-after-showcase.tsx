@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 import { images } from "@/lib/images";
+import type { SiteImageMap } from "@/types/db";
 import { cn } from "@/lib/utils";
 
 interface ShowcaseItem {
@@ -19,6 +20,9 @@ interface ShowcaseItem {
   /** Short value statement — the homeowner outcome. */
   value: string;
   service: string;
+  /** Optional DB image_key prefixes to override from the manager. */
+  beforeKey: string;
+  afterKey: string;
 }
 
 const items: ShowcaseItem[] = [
@@ -32,6 +36,8 @@ const items: ShowcaseItem[] = [
     value:
       "Restored 1960s character that adds resale value — and won't crack again.",
     service: "Stucco Repair",
+    beforeKey: "before_after_riverside_before",
+    afterKey: "before_after_riverside_after",
   },
   {
     id: "moreno-valley-exterior-remodel",
@@ -43,6 +49,8 @@ const items: ShowcaseItem[] = [
     value:
       "A whole-envelope refresh delivered faster than competitors quoted.",
     service: "Exterior Remodeling",
+    beforeKey: "before_after_moreno_before",
+    afterKey: "before_after_moreno_after",
   },
   {
     id: "corona-smooth-finish-stucco",
@@ -54,17 +62,27 @@ const items: ShowcaseItem[] = [
     value:
       "Built right means no recoats in five years — the kind of finish that lasts.",
     service: "Stucco Installation",
+    beforeKey: "before_after_corona_before",
+    afterKey: "before_after_corona_after",
   },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function BeforeAfterShowcase() {
+interface BeforeAfterShowcaseProps {
+  siteImages?: SiteImageMap;
+}
+
+export function BeforeAfterShowcase({
+  siteImages,
+}: BeforeAfterShowcaseProps = {}) {
   const [active, setActive] = React.useState(items[0].id);
   const current = items.find((i) => i.id === active) ?? items[0];
   const pair = images.beforeAfter[current.id];
-  const before = pair.before.enabled ? pair.before.src : undefined;
-  const after = pair.after.enabled ? pair.after.src : undefined;
+  const dbBefore = siteImages?.[current.beforeKey]?.image_url ?? null;
+  const dbAfter = siteImages?.[current.afterKey]?.image_url ?? null;
+  const before = dbBefore || (pair.before.enabled ? pair.before.src : undefined);
+  const after = dbAfter || (pair.after.enabled ? pair.after.src : undefined);
 
   return (
     <section className="relative py-20 sm:py-32 overflow-hidden">
