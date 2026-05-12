@@ -44,6 +44,14 @@ export default async function HomePage() {
   const featuredVideoEmbed =
     siteImages["homepage_feature_video"]?.youtube_embed_url ?? null;
 
+  if (process.env.NODE_ENV !== "production") {
+    console.log("[hero media]", {
+      heroPrimary: siteImages["hero_primary"]?.image_url,
+      heroMobile: siteImages["hero_mobile"]?.image_url,
+      heroVideo: siteImages["hero_video"]?.youtube_embed_url,
+    });
+  }
+
   return (
     <>
       <JsonLd data={ld} id="ld-org" />

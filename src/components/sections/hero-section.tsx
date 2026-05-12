@@ -48,18 +48,29 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ siteImages }: HeroSectionProps = {}) {
-  const dbPrimary = siteImages?.hero_primary;
-  const dbVideo = siteImages?.hero_video;
-  const heroBgUrl =
-    dbPrimary?.image_url ||
-    (images.hero.primary.enabled ? images.hero.primary.src : null);
+  // Dashboard-uploaded media wins. Bracket access keeps the key
+  // exactly as it lives in the site_images table.
+  const dbPrimaryUrl = siteImages?.["hero_primary"]?.image_url || null;
+  const dbPrimaryAlt = siteImages?.["hero_primary"]?.alt_text || null;
+  const dbMobileUrl = siteImages?.["hero_mobile"]?.image_url || null;
+  const dbVideoEmbed = siteImages?.["hero_video"]?.youtube_embed_url || null;
+
+  // Static manifest is the second-tier fallback. The gradient
+  // background underneath the section is the final safety net.
+  const manifestPrimary = images.hero.primary.enabled
+    ? images.hero.primary
+    : null;
+  const manifestMobile = images.hero.mobile.enabled ? images.hero.mobile : null;
+
+  const heroBgUrl = dbPrimaryUrl || manifestPrimary?.src || null;
   const heroBgAlt =
-    dbPrimary?.alt_text ||
-    (images.hero.primary.enabled
-      ? images.hero.primary.alt
-      : "BCL Plastering hero");
-  const heroBg = heroBgUrl ? { src: heroBgUrl, alt: heroBgAlt } : null;
-  const heroVideoEmbed = dbVideo?.youtube_embed_url ?? null;
+    dbPrimaryAlt || manifestPrimary?.alt || "BCL Plastering hero";
+  const heroMobileUrl = dbMobileUrl || manifestMobile?.src || null;
+  const heroVideoEmbed = isValidYoutubeEmbed(dbVideoEmbed)
+    ? dbVideoEmbed
+    : null;
+
+  const hasMedia = Boolean(heroVideoEmbed || heroBgUrl);
 
   const showcase = images.hero.showcasePortrait.enabled
     ? images.hero.showcasePortrait
@@ -67,9 +78,9 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Cinematic background video (when linked) */}
+      {/* Cinematic background — video first, image second, gradient (below) third */}
       {heroVideoEmbed ? (
-        <div aria-hidden className="absolute inset-0 -z-20">
+        <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden">
           <iframe
             title="Hero background video"
             src={buildHeroVideoEmbed(heroVideoEmbed)}
@@ -78,16 +89,40 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
             className="pointer-events-none absolute left-1/2 top-1/2 h-[120vh] min-h-full w-[177vh] min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
           />
         </div>
-      ) : heroBg ? (
+      ) : heroBgUrl ? (
         <div aria-hidden className="absolute inset-0 -z-20">
-          <Image
-            src={heroBg.src}
-            alt={heroBg.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
+          {/* Mobile crop when one is supplied — otherwise the primary
+              image covers both layouts. next/image handles either
+              public asset or a Supabase Storage URL via next.config. */}
+          {heroMobileUrl && heroMobileUrl !== heroBgUrl ? (
+            <>
+              <Image
+                src={heroMobileUrl}
+                alt={heroBgAlt}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover sm:hidden"
+              />
+              <Image
+                src={heroBgUrl}
+                alt={heroBgAlt}
+                fill
+                priority
+                sizes="100vw"
+                className="hidden object-cover sm:block"
+              />
+            </>
+          ) : (
+            <Image
+              src={heroBgUrl}
+              alt={heroBgAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
         </div>
       ) : null}
 
@@ -97,10 +132,9 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
         <div
           className="absolute inset-0"
           style={{
-            background:
-              heroBg || heroVideoEmbed
-                ? "linear-gradient(105deg, oklch(0.10 0.005 60 / 0.85) 0%, oklch(0.10 0.005 60 / 0.55) 50%, oklch(0.10 0.005 60 / 0.30) 100%), linear-gradient(180deg, oklch(0.10 0.005 60 / 0.20) 0%, oklch(0.10 0.005 60 / 0.55) 60%, oklch(0.10 0.005 60) 100%)"
-                : "radial-gradient(60% 50% at 70% 0%, oklch(0.34 0.05 78 / 0.65), transparent 70%), radial-gradient(50% 60% at 0% 30%, oklch(0.78 0.11 78 / 0.10), transparent 70%), radial-gradient(40% 50% at 50% 100%, oklch(0.78 0.11 78 / 0.06), transparent 70%)",
+            background: hasMedia
+              ? "linear-gradient(105deg, oklch(0.10 0.005 60 / 0.85) 0%, oklch(0.10 0.005 60 / 0.55) 50%, oklch(0.10 0.005 60 / 0.30) 100%), linear-gradient(180deg, oklch(0.10 0.005 60 / 0.20) 0%, oklch(0.10 0.005 60 / 0.55) 60%, oklch(0.10 0.005 60) 100%)"
+              : "radial-gradient(60% 50% at 70% 0%, oklch(0.34 0.05 78 / 0.65), transparent 70%), radial-gradient(50% 60% at 0% 30%, oklch(0.78 0.11 78 / 0.10), transparent 70%), radial-gradient(40% 50% at 50% 100%, oklch(0.78 0.11 78 / 0.06), transparent 70%)",
           }}
         />
         {/* warm spot light from upper-right */}
@@ -355,6 +389,13 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
         />
       </div>
     </section>
+  );
+}
+
+function isValidYoutubeEmbed(value: string | null | undefined): value is string {
+  if (!value) return false;
+  return /^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}(?:[?&].*)?$/.test(
+    value
   );
 }
 
