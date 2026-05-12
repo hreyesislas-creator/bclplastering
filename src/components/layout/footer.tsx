@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
+import { LogoBadge } from "./logo-badge";
 import { site } from "@/lib/site";
 import { services } from "@/data/services";
 import { getSiteSettings } from "@/lib/settings";
@@ -19,13 +19,10 @@ export async function Footer() {
               aria-label={`${site.name} home`}
               className="inline-flex transition-opacity hover:opacity-100"
             >
-              <Image
-                src="/logo/bcl-logo.png"
+              <LogoBadge
                 alt={site.name}
-                width={400}
-                height={400}
-                sizes="80px"
-                className="h-20 w-auto opacity-90"
+                size="md"
+                imageClassName="h-16 w-auto"
               />
             </Link>
             <p className="mt-5 text-sm text-muted-foreground max-w-xs leading-relaxed">

@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { LogoBadge } from "./logo-badge";
 import { MobileMenu } from "./mobile-menu";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -32,14 +32,11 @@ export function Navbar() {
             aria-label={`${site.name} home`}
             className="group inline-flex items-center transition-opacity hover:opacity-90"
           >
-            <Image
-              src="/logo/bcl-logo.png"
+            <LogoBadge
               alt={site.name}
-              width={400}
-              height={400}
+              size="sm"
               priority
-              sizes="48px"
-              className="h-10 sm:h-12 w-auto"
+              imageClassName="h-8 sm:h-9 w-auto"
             />
           </Link>
 

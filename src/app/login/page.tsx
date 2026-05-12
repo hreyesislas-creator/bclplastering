@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { LoginForm } from "./login-form";
 import { Container } from "@/components/ui/container";
+import { LogoBadge } from "@/components/layout/logo-badge";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -37,14 +37,11 @@ export default async function LoginPage({ searchParams }: PageProps) {
             aria-label={`${site.name} home`}
             className="mx-auto flex w-fit items-center justify-center transition-opacity hover:opacity-90"
           >
-            <Image
-              src="/logo/bcl-logo.png"
+            <LogoBadge
               alt={site.name}
-              width={400}
-              height={400}
+              size="lg"
               priority
-              sizes="96px"
-              className="h-24 w-auto"
+              imageClassName="h-20 w-auto"
             />
           </Link>
 
