@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Stucco installation and repair, exterior and interior remodeling, drywall repair, and decorative finishes — done right across the Inland Empire.",
+    "Exterior stucco installation, repair, and restoration — plus custom stucco finishes and full-envelope exterior remodels across the Inland Empire.",
   alternates: { canonical: "/services" },
 };
 
@@ -26,11 +26,11 @@ export default async function ServicesPage() {
               eyebrow="Services"
               title={
                 <>
-                  Premium services,{" "}
+                  Premium exterior services,{" "}
                   <span className="text-gold-gradient">end-to-end.</span>
                 </>
               }
-              description="One crew. One project manager. From the initial walk-through and written estimate, to permits, inspections, and the final walk-through."
+              description="One crew. One project manager. From the initial walk-through and written estimate, through permits and inspections, to the final color-coat and weather seal."
             />
           </Reveal>
         </Container>

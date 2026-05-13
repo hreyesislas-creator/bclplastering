@@ -21,10 +21,8 @@ type Filter = "all" | ServiceType;
 const filters: { id: Filter; label: string }[] = [
   { id: "all", label: "All work" },
   { id: "stucco", label: "Stucco" },
-  { id: "plastering", label: "Plastering" },
-  { id: "remodel", label: "Remodels" },
-  { id: "exterior-paint", label: "Exterior" },
-  { id: "drywall", label: "Drywall" },
+  { id: "plastering", label: "Finish work" },
+  { id: "exterior-paint", label: "Exterior remodels" },
 ];
 
 /* Variable aspect ratios drive the masonry rhythm. */

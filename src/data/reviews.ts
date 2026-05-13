@@ -25,7 +25,7 @@ export const reviews: Review[] = [
     source: "thumbtack",
     rating: 5,
     review_text:
-      "Full kitchen remodel in Eastvale. Permits, design changes mid-project, level-5 smooth walls, the Venetian plaster behind the range — all delivered on schedule and under our worst-case budget. Would hire them tomorrow.",
+      "Full re-stucco on our Eastvale home — three elevations stripped, re-lathed, and finished in a Santa Barbara smooth. Permits, HOA paperwork, and color matching all handled in-house. Delivered on schedule and under our worst-case budget. Would hire them tomorrow.",
     created_at: "2026-02-02T00:00:00Z",
   },
   {

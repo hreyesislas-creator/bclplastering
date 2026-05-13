@@ -4,9 +4,9 @@ export type ServiceIconKey =
   | "stucco-install"
   | "stucco-repair"
   | "exterior"
-  | "interior"
-  | "drywall"
-  | "decorative";
+  | "restoration"
+  | "patch"
+  | "finishes";
 
 export interface ServiceItem {
   slug: string;
@@ -62,7 +62,7 @@ export const services: ServiceItem[] = [
     short:
       "Full-envelope facelifts — re-stucco, paint, trim, columns, and outdoor living rooms.",
     description:
-      "From Spanish-style arches to clean modern overhangs, we coordinate every exterior trade so your home reads as one design.",
+      "From Spanish-style arches to clean modern overhangs, we coordinate every exterior trade so your home reads as one elevation.",
     bullets: [
       "Whole-home re-stucco & paint",
       "Custom columns & beams",
@@ -71,52 +71,55 @@ export const services: ServiceItem[] = [
     ],
   },
   {
-    slug: "interior-remodeling",
-    type: "remodel",
-    iconKey: "interior",
-    title: "Interior Remodeling",
+    slug: "exterior-stucco-restoration",
+    type: "stucco",
+    iconKey: "restoration",
+    title: "Exterior Stucco Restoration",
     short:
-      "Kitchens, bathrooms, and full home remodels — design through final walk-through.",
+      "Re-stucco, crack repair, and full-elevation restoration — engineered to outlast the next storm.",
     description:
-      "Licensed and insured general contracting. One project manager from demo to permit close-out, with a vetted subcontractor network.",
+      "We strip back failed stucco, re-lath and re-paper where the substrate gave out, and rebuild the elevation in matching texture and color. HOA-compliant, weather-sealed, and inspected end-to-end.",
     bullets: [
-      "Kitchen & bath",
-      "Open-concept conversions",
-      "Permits & inspections handled",
-      "Level-5 smooth walls & arches",
+      "Re-stucco & full elevation restoration",
+      "Crack & water-damage repair",
+      "Texture and color matching",
+      "HOA-compliant exterior packages",
+      "Weather sealing & moisture protection",
     ],
+    startingFrom: "By estimate",
   },
   {
     slug: "drywall-repair",
     type: "drywall",
-    iconKey: "drywall",
-    title: "Drywall Repair",
+    iconKey: "patch",
+    title: "Patch & Texture Repair",
     short:
-      "Texture matching, water damage, and full hangs — repairs that disappear.",
+      "Stucco patches, texture matching, and water-damage repair — every fix disappears into the wall.",
     description:
-      "Knockdown, orange-peel, smooth — every patch is feathered and sanded so the existing surface stays intact.",
+      "Hand-feathered patch work and texture matching for elevations that need to read as one surface. Knockdown, orange-peel, lace, sand, smooth — matched to whatever's already on the wall.",
     bullets: [
       "Texture matching",
       "Water-damage repair",
-      "Hang & finish",
-      "Ceiling & vaulted repairs",
+      "Patch work & feathered repairs",
+      "Cured, sanded, and color-ready",
     ],
   },
   {
-    slug: "decorative-finishes",
+    slug: "custom-stucco-finishes",
     type: "plastering",
-    iconKey: "decorative",
-    title: "Decorative Finishes",
+    iconKey: "finishes",
+    title: "Custom Stucco Finishes",
     short:
-      "Venetian, Tadelakt, lime wash, and polished plaster for high-end interiors.",
+      "Santa Barbara, smooth, lace, sand, and dash — hand-troweled exterior finishes with integral or acrylic color.",
     description:
-      "Hand-troweled finishes by craftsmen with 20+ years on the wall. We work with designers and architects across LA and the Valley.",
+      "High-end exterior finish work by craftsmen with 20+ years on the wall. Acrylic and integral color systems, hand-floated textures, and feature elevations that read as one continuous surface.",
     bullets: [
-      "Venetian & polished plaster",
-      "Lime wash & Tadelakt",
-      "Skim coat & level-5",
-      "Curved walls & arches",
+      "Santa Barbara smooth",
+      "Lace, sand, and dash textures",
+      "Acrylic & integral color systems",
+      "Feature-elevation finish work",
     ],
+    startingFrom: "By estimate",
   },
 ];
 

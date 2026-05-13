@@ -34,7 +34,7 @@ export default async function GalleryPage() {
                   <span className="text-gold-gradient">finished work.</span>
                 </>
               }
-              description="Stucco, plaster, and remodels finished by our crew across Riverside, Moreno Valley, Corona, and the surrounding cities. Filter by trade, click any project for the full story."
+              description="Exterior stucco, custom finishes, and full-elevation restoration finished by our crew across Riverside, Moreno Valley, Corona, and the surrounding cities. Filter by trade, click any project for the full story."
               align="center"
             />
           </Reveal>

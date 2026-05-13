@@ -9,7 +9,7 @@ import { getPublicProjects } from "@/lib/public-data";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Recent stucco, plastering, and remodel projects from BCL Plastering across the Inland Empire.",
+    "Recent exterior stucco, restoration, and custom finish projects from BCL Plastering across the Inland Empire.",
   alternates: { canonical: "/projects" },
 };
 

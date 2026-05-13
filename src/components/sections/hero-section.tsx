@@ -32,13 +32,13 @@ const trustWords = [
   "Stucco Installation",
   "Stucco Repair",
   "Santa Barbara Smooth",
-  "Venetian Plaster",
-  "Lime Wash",
-  "Tadelakt",
-  "Drywall Repair",
-  "Decorative Finishes",
+  "Custom Stucco Finishes",
+  "Re-Stucco",
+  "Texture Matching",
+  "Crack Repair",
+  "HOA Compliance",
   "ADUs",
-  "Whole-Home Remodels",
+  "Exterior Restoration",
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -153,7 +153,7 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
               transition={{ duration: 0.7, delay: 0.05, ease }}
               className="h-display mt-6 text-balance text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.4rem] font-semibold text-foreground"
             >
-              Stucco &amp; remodels{" "}
+              Exterior stucco{" "}
               <span className="text-gold-gradient">finished by hand.</span>
               <br className="hidden sm:block" />
               Built to last in the Inland Empire.
@@ -165,10 +165,11 @@ export function HeroSection({ siteImages }: HeroSectionProps = {}) {
               transition={{ duration: 0.7, delay: 0.15, ease }}
               className="mt-7 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed"
             >
-              Two decades of hand-troweled stucco, plastering, and full-home
-              remodels across Riverside, Moreno Valley, Corona, and the rest of
-              the Inland Empire. One project manager from walk-through to final
-              inspection — and a clean job site every day.
+              Two decades of hand-troweled stucco, custom finishes, and
+              exterior restoration across Riverside, Moreno Valley, Corona, and
+              the rest of the Inland Empire. One project manager from
+              walk-through to final inspection — and a clean job site every
+              day.
             </motion.p>
 
             <motion.div

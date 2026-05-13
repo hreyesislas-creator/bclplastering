@@ -85,7 +85,7 @@ create policy "service-images writable by auth" on storage.objects
   with check (bucket_id = 'service-images');
 
 -- --------------------------------------------------------------------------
--- Seed the six current services
+-- Seed the six current services (exterior-focused positioning)
 -- --------------------------------------------------------------------------
 insert into public.services
   (slug, title, category, short_description, description, bullets,
@@ -126,7 +126,7 @@ values
     'Exterior Remodeling',
     'Exterior',
     'Full-envelope facelifts — re-stucco, paint, trim, columns, and outdoor living rooms.',
-    'From Spanish-style arches to clean modern overhangs, we coordinate every exterior trade so your home reads as one design.',
+    'From Spanish-style arches to clean modern overhangs, we coordinate every exterior trade so your home reads as one elevation.',
     array[
       'Whole-home re-stucco & paint',
       'Custom columns & beams',
@@ -137,45 +137,48 @@ values
     true, true, 30
   ),
   (
-    'interior-remodeling',
-    'Interior Remodeling',
-    'Remodels',
-    'Kitchens, bathrooms, and full home remodels — design through final walk-through.',
-    'Licensed and insured general contracting. One project manager from demo to permit close-out, with a vetted subcontractor network.',
+    'exterior-stucco-restoration',
+    'Exterior Stucco Restoration',
+    'Exterior Stucco Restoration',
+    'Re-stucco, crack repair, and full-elevation restoration — engineered to outlast the next storm.',
+    'We strip back failed stucco, re-lath and re-paper where the substrate gave out, and rebuild the elevation in matching texture and color. HOA-compliant, weather-sealed, and inspected end-to-end.',
     array[
-      'Kitchen & bath',
-      'Open-concept conversions',
-      'Permits & inspections handled'
+      'Re-stucco & full elevation restoration',
+      'Crack & water-damage repair',
+      'Texture and color matching',
+      'HOA-compliant exterior packages',
+      'Weather sealing & moisture protection'
     ],
     'By estimate',
-    'sofa',
+    'wrench',
     true, true, 40
   ),
   (
     'drywall-repair',
-    'Drywall Repair',
-    'Drywall',
-    'Texture matching, water damage, and full hangs — repairs that disappear.',
-    'Knockdown, orange-peel, smooth — every patch is feathered and sanded so the existing surface stays intact.',
+    'Patch & Texture Repair',
+    'Repair',
+    'Stucco patches, texture matching, and water-damage repair — every fix disappears into the wall.',
+    'Hand-feathered patch work and texture matching for elevations that need to read as one surface. Knockdown, orange-peel, lace, sand, smooth — matched to whatever''s already on the wall.',
     array[
       'Texture matching',
       'Water-damage repair',
-      'Hang & finish'
+      'Patch work & feathered repairs'
     ],
     'By estimate',
     'paint-roller',
     true, true, 50
   ),
   (
-    'decorative-finishes',
-    'Decorative Finishes',
-    'Plastering',
-    'Venetian, Tadelakt, lime wash, and polished plaster for high-end interiors.',
-    'Hand-troweled finishes by craftsmen with 20+ years on the wall. We work with designers and architects across LA and the Valley.',
+    'custom-stucco-finishes',
+    'Custom Stucco Finishes',
+    'Custom Stucco Finishes',
+    'Santa Barbara, smooth, lace, sand, and dash — hand-troweled exterior finishes with integral or acrylic color.',
+    'High-end exterior finish work by craftsmen with 20+ years on the wall. Acrylic and integral color systems, hand-floated textures, and feature elevations that read as one continuous surface.',
     array[
-      'Venetian & polished plaster',
-      'Lime wash & Tadelakt',
-      'Skim coat & level-5'
+      'Santa Barbara smooth',
+      'Lace, sand, and dash textures',
+      'Acrylic & integral color systems',
+      'Feature-elevation finish work'
     ],
     'By estimate',
     'sparkles',

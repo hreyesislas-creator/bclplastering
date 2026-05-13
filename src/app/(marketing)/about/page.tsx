@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "BCL Plastering & Building Remodel — family-owned California craftsmanship serving the Inland Empire.",
+    "BCL Plastering & Building Remodel — family-owned California exterior stucco craftsmanship serving the Inland Empire.",
   alternates: { canonical: "/about" },
 };
 
@@ -81,7 +81,7 @@ export default function AboutPage() {
                   <Row label="License" value={site.license} />
                   <Row label="Crew tenure" value="10+ years average" />
                   <Row label="Headquarters" value={site.address} />
-                  <Row label="Specialties" value="Stucco · Plaster · Remodels" />
+                  <Row label="Specialties" value="Stucco · Plaster · Exterior Restoration" />
                   <Row
                     label="Service area"
                     value={`${site.serviceAreas.length}+ cities · IE`}

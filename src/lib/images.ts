@@ -51,17 +51,17 @@ export const images = {
       "/services/exterior-remodeling.jpg",
       "Whole-home exterior remodel with custom columns and trim"
     ),
-    "interior-remodeling": off(
-      "/services/interior-remodeling.jpg",
-      "Open-concept kitchen remodel with level-5 walls"
+    "exterior-stucco-restoration": off(
+      "/services/exterior-stucco-restoration.jpg",
+      "Restored stucco elevation, re-lathed and color-matched"
     ),
     "drywall-repair": off(
       "/services/drywall-repair.jpg",
-      "Texture-matched drywall repair, sanded smooth"
+      "Hand-feathered patch & texture repair, sanded smooth"
     ),
-    "decorative-finishes": off(
-      "/services/decorative-finishes.jpg",
-      "Polished Venetian plaster wall in warm light"
+    "custom-stucco-finishes": off(
+      "/services/custom-stucco-finishes.jpg",
+      "Hand-troweled Santa Barbara smooth stucco in warm light"
     ),
   },
   beforeAfter: {
@@ -109,21 +109,21 @@ export const images = {
       "/projects/stucco-installation/corona-cover.jpg",
       "Smooth finish stucco new build in Corona"
     ),
-    "open-concept-kitchen-remodel": off(
-      "/projects/remodeling/eastvale-cover.jpg",
-      "Open-concept kitchen remodel in Eastvale"
+    "multi-elevation-re-stucco": off(
+      "/projects/restoration/eastvale-cover.jpg",
+      "Multi-elevation re-stucco in Eastvale"
     ),
-    "tadelakt-powder-room": off(
-      "/projects/remodeling/menifee-cover.jpg",
-      "Tadelakt powder room in Menifee"
+    "santa-barbara-smooth-feature-elevation": off(
+      "/projects/finishes/menifee-cover.jpg",
+      "Santa Barbara smooth feature elevation in Menifee"
     ),
     "adu-exterior-stucco-match": off(
       "/projects/stucco-installation/perris-cover.jpg",
       "ADU exterior stucco texture match in Perris"
     ),
-    "drywall-restoration-after-water-damage": off(
-      "/projects/drywall/jurupa-cover.jpg",
-      "Drywall restoration after water damage in Jurupa Valley"
+    "exterior-stucco-water-damage-restoration": off(
+      "/projects/restoration/jurupa-cover.jpg",
+      "Exterior stucco water-damage restoration in Jurupa Valley"
     ),
   } as Record<string, ImageRef>,
   reviewers: {

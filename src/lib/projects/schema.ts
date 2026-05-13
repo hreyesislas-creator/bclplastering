@@ -15,11 +15,9 @@ export const PROJECT_CATEGORY_SUGGESTIONS = [
   "Stucco Installation",
   "Stucco Repair",
   "Exterior Remodeling",
-  "Interior Remodeling",
-  "Drywall Repair",
-  "Decorative Finishes",
+  "Exterior Stucco Restoration",
+  "Custom Stucco Finishes",
   "Plastering",
-  "Remodels",
   "Exterior",
   "Stucco",
 ] as const;

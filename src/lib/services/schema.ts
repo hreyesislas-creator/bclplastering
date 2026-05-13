@@ -4,16 +4,15 @@ export const SERVICE_ICON_KEYS = [
   "building",
   "wrench",
   "sun",
-  "sofa",
   "paint-roller",
   "sparkles",
   // Legacy keys preserved so existing static seed cards keep rendering.
   "stucco-install",
   "stucco-repair",
   "exterior",
-  "interior",
-  "drywall",
-  "decorative",
+  "restoration",
+  "patch",
+  "finishes",
 ] as const;
 
 export const SERVICE_CATEGORY_SUGGESTIONS = [
@@ -22,13 +21,10 @@ export const SERVICE_CATEGORY_SUGGESTIONS = [
   "Stucco Repair",
   "Exterior",
   "Exterior Remodeling",
-  "Interior",
-  "Interior Remodeling",
-  "Drywall",
-  "Drywall Repair",
+  "Exterior Stucco Restoration",
+  "Custom Stucco Finishes",
   "Plastering",
-  "Decorative Finishes",
-  "Remodels",
+  "Repair",
 ] as const;
 
 export const serviceInputSchema = z.object({

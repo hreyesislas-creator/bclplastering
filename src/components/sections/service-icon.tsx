@@ -2,7 +2,6 @@ import {
   Building2,
   Wrench,
   Sun,
-  Sofa,
   PaintRoller,
   Sparkles,
   type LucideIcon,
@@ -19,25 +18,23 @@ const map: Record<string, LucideIcon> = {
   building: Building2,
   wrench: Wrench,
   sun: Sun,
-  sofa: Sofa,
   "paint-roller": PaintRoller,
   sparkles: Sparkles,
   // Legacy static-seed keys
   "stucco-install": Building2,
   "stucco-repair": Wrench,
   exterior: Sun,
-  interior: Sofa,
-  drywall: PaintRoller,
-  decorative: Sparkles,
+  restoration: Wrench,
+  patch: PaintRoller,
+  finishes: Sparkles,
 };
 
 export const SERVICE_ICON_OPTIONS = [
   { key: "building", label: "Building (Stucco install)" },
-  { key: "wrench", label: "Wrench (Repair)" },
+  { key: "wrench", label: "Wrench (Repair / Restoration)" },
   { key: "sun", label: "Sun (Exterior)" },
-  { key: "sofa", label: "Sofa (Interior)" },
-  { key: "paint-roller", label: "Paint roller (Drywall)" },
-  { key: "sparkles", label: "Sparkles (Decorative)" },
+  { key: "paint-roller", label: "Paint roller (Patch & texture)" },
+  { key: "sparkles", label: "Sparkles (Custom finishes)" },
 ] as const;
 
 export function ServiceIcon({

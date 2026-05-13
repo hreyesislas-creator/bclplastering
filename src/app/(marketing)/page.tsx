@@ -79,7 +79,7 @@ export default async function HomePage() {
                     <span className="text-gold-gradient">not a paint job.</span>
                   </>
                 }
-                description="From hand-troweled stucco to full home remodels, every project gets the same prep, the same crew, and the same standard of finish."
+                description="From hand-troweled stucco to full exterior restoration, every elevation gets the same prep, the same crew, and the same standard of finish."
               />
               <Button asChild variant="outline" size="lg" className="self-start md:self-end">
                 <Link href="/services">

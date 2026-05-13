@@ -1,9 +1,10 @@
 export const site = {
   name: "BCL Plastering & Building Remodel",
   shortName: "BCL Plastering",
-  tagline: "Inland Empire stucco, plastering, and remodels — built to last.",
+  tagline:
+    "Inland Empire exterior stucco, plastering, and restoration — built to last.",
   description:
-    "Premium stucco, plastering, and home remodeling across the Inland Empire. Hand-troweled finishes, licensed craftsmanship, and a project manager who picks up the phone.",
+    "Premium exterior stucco, custom finishes, and full-elevation restoration across the Inland Empire. Hand-troweled finishes, licensed craftsmanship, and a project manager who picks up the phone.",
   url: "https://www.bclplastering.com",
   phone: "(951) 555-0123",
   phoneHref: "tel:+19515550123",
