@@ -130,7 +130,7 @@ values
     array[
       'Whole-home re-stucco & paint',
       'Custom columns & beams',
-      'Patio covers & outdoor kitchens'
+      'Patio covers & outdoor living'
     ],
     'By estimate',
     'sun',
@@ -157,12 +157,12 @@ values
     'drywall-repair',
     'Patch & Texture Repair',
     'Repair',
-    'Stucco patches, texture matching, and water-damage repair — every fix disappears into the wall.',
-    'Hand-feathered patch work and texture matching for elevations that need to read as one surface. Knockdown, orange-peel, lace, sand, smooth — matched to whatever''s already on the wall.',
+    'Stucco patches, texture matching, and water-damage repair — every fix disappears into the elevation.',
+    'Hand-feathered stucco patches and texture matching for elevations that need to read as one surface. Lace, sand, dash, and smooth textures — matched to whatever''s already on the wall.',
     array[
-      'Texture matching',
-      'Water-damage repair',
-      'Patch work & feathered repairs'
+      'Stucco patch & spall repair',
+      'Texture & color matching',
+      'Water-damage patch work'
     ],
     'By estimate',
     'paint-roller',

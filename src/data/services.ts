@@ -66,7 +66,7 @@ export const services: ServiceItem[] = [
     bullets: [
       "Whole-home re-stucco & paint",
       "Custom columns & beams",
-      "Patio covers & outdoor kitchens",
+      "Patio covers & outdoor living",
       "Texture-matched additions",
     ],
   },
@@ -94,14 +94,14 @@ export const services: ServiceItem[] = [
     iconKey: "patch",
     title: "Patch & Texture Repair",
     short:
-      "Stucco patches, texture matching, and water-damage repair — every fix disappears into the wall.",
+      "Stucco patches, texture matching, and water-damage repair — every fix disappears into the elevation.",
     description:
-      "Hand-feathered patch work and texture matching for elevations that need to read as one surface. Knockdown, orange-peel, lace, sand, smooth — matched to whatever's already on the wall.",
+      "Hand-feathered stucco patches and texture matching for elevations that need to read as one surface. Lace, sand, dash, and smooth textures — matched to whatever's already on the wall.",
     bullets: [
-      "Texture matching",
-      "Water-damage repair",
-      "Patch work & feathered repairs",
-      "Cured, sanded, and color-ready",
+      "Stucco patch & spall repair",
+      "Texture & color matching",
+      "Water-damage patch work",
+      "Color-coat & weather seal",
     ],
   },
   {

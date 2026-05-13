@@ -54,14 +54,25 @@ update public.services
 set
   title             = 'Patch & Texture Repair',
   category          = 'Repair',
-  short_description = 'Stucco patches, texture matching, and water-damage repair — every fix disappears into the wall.',
-  description       = 'Hand-feathered patch work and texture matching for elevations that need to read as one surface. Knockdown, orange-peel, lace, sand, smooth — matched to whatever''s already on the wall.',
+  short_description = 'Stucco patches, texture matching, and water-damage repair — every fix disappears into the elevation.',
+  description       = 'Hand-feathered stucco patches and texture matching for elevations that need to read as one surface. Lace, sand, dash, and smooth textures — matched to whatever''s already on the wall.',
   bullets           = array[
-    'Texture matching',
-    'Water-damage repair',
-    'Patch work & feathered repairs'
+    'Stucco patch & spall repair',
+    'Texture & color matching',
+    'Water-damage patch work'
   ]
 where slug = 'drywall-repair';
+
+-- 3a) exterior-remodeling — drop the "outdoor kitchens" bullet so no
+--     "kitchen" word remains in the homepage card preview.
+update public.services
+set
+  bullets = array[
+    'Whole-home re-stucco & paint',
+    'Custom columns & beams',
+    'Patio covers & outdoor living'
+  ]
+where slug = 'exterior-remodeling';
 
 -- --------------------------------------------------------------------------
 -- Projects — rename + repointing (IDs / uploaded media preserved)
