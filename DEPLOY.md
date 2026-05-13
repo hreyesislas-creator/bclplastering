@@ -42,7 +42,7 @@ Skip if you don't need text alerts yet — the abstraction stays a no-op.
    - `TWILIO_ACCOUNT_SID`
    - `TWILIO_AUTH_TOKEN`
    - `TWILIO_FROM_NUMBER` (E.164: `+1...`)
-   - `LEAD_NOTIFICATION_PHONE` (E.164: `+19515550123`)
+   - `LEAD_NOTIFICATION_PHONE` (E.164: `+19517423719`)
 
 ## 4. Analytics — optional
 

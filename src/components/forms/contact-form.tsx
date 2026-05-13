@@ -153,7 +153,7 @@ export function ContactForm() {
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            placeholder="(951) 555-0123"
+            placeholder="(951) 742-3719"
             {...register("phone", {
               onChange: (e) => setValue("phone", formatPhone(e.target.value)),
             })}

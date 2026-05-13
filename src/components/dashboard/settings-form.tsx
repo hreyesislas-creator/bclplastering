@@ -46,7 +46,7 @@ export function SettingsForm({ settings }: SettingsFormProps) {
           id="whatsapp"
           label="WhatsApp link"
           defaultValue={settings.whatsapp}
-          hint="Use the wa.me/<digits> format. Example: https://wa.me/19515550123"
+          hint="Use the wa.me/<digits> format. Example: https://wa.me/19517423719"
         />
       </section>
 

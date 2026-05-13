@@ -12,7 +12,7 @@ matching name + phone + address (NAP) data across listings.
 |---|---|
 | **Name** | BCL Plastering & Building Remodel |
 | **Short name** | BCL Plastering |
-| **Phone** | (951) 555-0123 *(replace with real number before publishing)* |
+| **Phone** | (951) 742-3719 |
 | **Website** | <https://www.bclplastering.com> |
 | **Email** | info@bclplastering.com |
 | **Service area** | Riverside County, California *(set as service-area business — no storefront)* |

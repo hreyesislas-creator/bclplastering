@@ -6,10 +6,10 @@ export const site = {
   description:
     "Premium exterior stucco, custom finishes, and full-elevation restoration across the Inland Empire. Hand-troweled finishes, licensed craftsmanship, and a project manager who picks up the phone.",
   url: "https://www.bclplastering.com",
-  phone: "(951) 555-0123",
-  phoneHref: "tel:+19515550123",
+  phone: "(951) 742-3719",
+  phoneHref: "tel:+19517423719",
   email: "info@bclplastering.com",
-  whatsapp: "https://wa.me/19515550123",
+  whatsapp: "https://wa.me/19517423719",
   address: "Riverside County, California",
   hours: "Mon – Sat · 7:00 AM – 6:00 PM",
   license: "CSLB Lic. #1098765",
